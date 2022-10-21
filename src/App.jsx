@@ -12,13 +12,13 @@ function App() {
   const dia2 = "21"
   const dia3 = "21"
 
-  const hora1 = "17"
-  const hora2 = "17"
-  const hora3 = "17"
+  const hora1 = "18"
+  const hora2 = "18"
+  const hora3 = "18"
 
-  const min1 = "46"
-  const min2 = "49"
-  const min3 = "55"
+  const min1 = "3"
+  const min2 = "6"
+  const min3 = "8"
 
   const [countdown, setCountdown] = useState(true)
   const [countdown2, setCountdown2] = useState(false)
@@ -42,52 +42,81 @@ function App() {
     cotizarCripto()
 
   }, [])
-  console.log(caracter1)
-  console.log(caracter2)
-  console.log(caracter3)
+
+
+  let render1;
+  let render2;
+  let render3;
+
+  let countDownDate1 = Date.UTC(2022, mes, dia1, hora1, min1, 0)
+  let countDownDate2 = Date.UTC(2022, mes, dia2, hora2, min2, 0)
+  let countDownDate3 = Date.UTC(2022, mes, dia3, hora3, min3, 0)
+
+  let distance1;
+  let distance2;
+  let distance3;
+
+  let now = new Date().getTime();
+
+  distance1 = countDownDate1 - now;
+  distance2 = countDownDate2 - now;
+  distance3 = countDownDate3 - now;
+
+  if (distance1 > 0 && distance1 < distance2 && distance1 < distance3) {
+    render1 = <>
+      <Countdownlist
+        setCountdown={setCountdown}
+        setCountdown2={setCountdown2}
+        mes={mes}
+        dias={dia1}
+        horas={hora1}
+        minutos={min1}
+        name={caracter1?.name}
+        img={caracter1?.image}
+      />
+    </>
+  }else if (distance2 > 0 && distance2 > distance1 && distance2 < distance3) {
+    render2 = <>
+      <Countdownlist
+        setCountdown={setCountdown2}
+        setCountdown2={setCountdown3}
+        mes={mes}
+        dias={dia2}
+        horas={hora2}
+        minutos={min2}
+        name={caracter2?.name}
+        img={caracter2?.image}
+      />
+    </>
+  }else if (distance3 > 0 && distance3 > distance1 && distance3 > distance2) {
+    render3 = <>
+      <Countdownlist
+        setCountdown={setCountdown2}
+        setCountdown2={setCountdown3}
+        mes={mes}
+        dias={dia3}
+        horas={hora3}
+        minutos={min3}
+        name={caracter3?.name}
+        img={caracter3?.image}
+      />
+    </>
+  }
+
+
 
 
   return (
 
     <div >
       {/* contador1 */}
-      {countdown ?
-        <Countdownlist
-          setCountdown={setCountdown}
-          setCountdown2={setCountdown2}
-          mes={mes}
-          dias={dia1}
-          horas={hora1}
-          minutos={min1}
-          name={caracter1?.name}
-          img={caracter1?.image}
-        /> : <></>}
+      {render1}
 
-        {/* contador 2 */}
-      {countdown2 ?
-        <Countdownlist
-          setCountdown={setCountdown2}
-          setCountdown2={setCountdown3}
-          mes={mes}
-          dias={dia2}
-          horas={hora2}
-          minutos={min2}
-          name={caracter2?.name}
-          img={caracter2?.image}
-        /> : <></>}
+      {/* contador 2 */}
+      {render2}
 
-        {/* contador 3 */}
-      {countdown3 ?
-        <Countdownlist
-          setCountdown={setCountdown2}
-          setCountdown2={setCountdown3}
-          mes={mes}
-          dias={dia3}
-          horas={hora3}
-          minutos={min3}
-          name={caracter3?.name}
-          img={caracter3?.image}
-        /> : <></>}
+      {/* contador 3 */}
+      {render3}
     </div>
   )
 }
